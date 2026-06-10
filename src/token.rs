@@ -184,7 +184,7 @@ impl Tokenizer {
     }
 
     fn is_string_delimiter_start(c: char) -> bool {
-        matches!(c, '`' | '[' | '\'' | '"')
+        matches!(c, '`' | '\'' | '"')
     }
 
     fn is_string_escape_for(start: char, c: char) -> bool {
@@ -199,7 +199,6 @@ impl Tokenizer {
     fn is_string_delimiter_end_for(start: char, c: char) -> bool {
         match start {
             '`' => c == '`',
-            '[' => c == ']',
             '\'' => c == '\'',
             '"' => c == '"',
             _ => false,
@@ -460,7 +459,9 @@ mod tests {
         assert_eq!(
             tokens,
             vec![
-                Token::Quoted("[ab]".to_string()),
+                Token::Punctuation("[".to_string()),
+                Token::Unquoted("ab".to_string()),
+                Token::Punctuation("]".to_string()),
                 Token::Space(" ".to_string()),
             ]
         );
